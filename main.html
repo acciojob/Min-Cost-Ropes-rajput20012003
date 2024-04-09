@@ -1,16 +1,42 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-	<link rel="stylesheet" href="styles.css">
+    <title>Min Cost Ropes</title>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+    <script>
+        function mincost(arr) {
+            // Sort the array initially
+            arr.sort((a, b) => a - b);
 
+            let totalCost = 0;
+
+            // Keep merging the two smallest ropes until there is only one rope left
+            while (arr.length > 1) {
+                // Extract the two smallest ropes
+                const min1 = arr.shift();
+                const min2 = arr.shift();
+
+                // Calculate the cost of merging them
+                const mergedLength = min1 + min2;
+
+                // Add the cost to the total
+                totalCost += mergedLength;
+
+                // Insert the merged rope back into the array while maintaining the sorted order
+                let i = 0;
+                while (i < arr.length && arr[i] < mergedLength) {
+                    i++;
+                }
+                arr.splice(i, 0, mergedLength);
+            }
+
+            return totalCost;
+        }
+
+        // Test cases
+        console.log(mincost([4, 3, 2, 6])); // Output: 29
+        console.log(mincost([1, 2, 3, 4, 5])); // Output: 33
+    </script>
 </body>
-
 </html>
